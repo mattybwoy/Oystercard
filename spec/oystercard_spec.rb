@@ -25,4 +25,12 @@ describe Oystercard do
     end
   end
 
+  describe 'touch_in' do
+    it { is_expected.to respond_to(:touch_in) }
+    it 'allows you to touch in' do
+      expect(subject.balance).to be >= 2
+      expect(subject.touch_in).to eq true
+    end
+
+  end
 end

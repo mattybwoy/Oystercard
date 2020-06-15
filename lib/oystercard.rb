@@ -15,4 +15,7 @@ MAXIMUM_BALANCE = 90
     @balance -= amount
   end
 
-end
+  def touch_in
+    true
+    end
+  end
