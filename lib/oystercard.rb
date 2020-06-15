@@ -16,6 +16,8 @@ MAXIMUM_BALANCE = 90
   end
 
   def touch_in
+    if balance > 0
     true
     end
   end
+end
