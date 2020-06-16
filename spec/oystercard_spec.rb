@@ -23,19 +23,20 @@ end
   expect{ subject.top_up 91 }.to raise_error "Balance exceeded"
   end
 
-  describe 'deduct' do
-    it { is_expected.to respond_to(:deduct).with(1).argument }
-    it 'deducts the amount' do
-    expect { subject.deduct 3 }.to change { subject.balance }.by -3
-    end
-  end
+ #describe 'deduct' do
+    #it { is_expected.to respond_to(:deduct).with(1).argument }
+    #it 'deducts the amount' do
+    #expect { subject.deduct 3 }.to change { subject.balance }.by -3
+    #end
+  #end 
+  
 
   describe 'touch_in' do
     it { is_expected.to respond_to(:touch_in) }
     it 'allows you to touch in' do
       subject.top_up(1)
       #expect(subject.balance).to_not be_zero
-      
+
       expect(subject.touch_in).to eq true
     end
     it 'raises an error if balance less than £1' do
@@ -56,5 +57,10 @@ end
     it 'allows you to touch out' do
       expect(subject.touch_out).to eq false 
     end
+    it "deducts the fare from balance" do 
+      subject.top_up(1)
+      subject.touch_in
+    expect { subject.touch_out }.to change { subject.balance }.by -(Oystercard::MINIMUM_FARE)
   end
+end
 end
