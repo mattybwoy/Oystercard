@@ -3,6 +3,11 @@ require './lib/oystercard'
 describe Oystercard do
   subject(:oystercard) { Oystercard.new }
 
+  describe 'initialize' do
+    it 'checks not in journey upon creation' do
+    expect(subject.in_journey?).to eq false
+  end
+end
   describe 'balance' do
     it 'returns 0 by default' do
       expect(subject.balance).to eq 0
@@ -29,11 +34,14 @@ describe Oystercard do
     it { is_expected.to respond_to(:touch_in) }
     it 'allows you to touch in' do
       subject.top_up(1)
-      expect(subject.balance).to_not be_zero
+      #expect(subject.balance).to_not be_zero
+      
       expect(subject.touch_in).to eq true
     end
-
+    it 'raises an error if balance less than £1' do
+      expect { subject.touch_in }.to raise_error "Insufficient credit"
   end
+end
   describe 'in-journey?' do
     it { is_expected.to respond_to(:in_journey?) }
     it 'checks whether you are in in journey' do
