@@ -4,6 +4,11 @@ describe Oystercard do
   subject(:oystercard) { Oystercard.new }
   let(:station) {double :station}
   
+  describe 'initialize' do
+    it 'checks journey history is empty' do
+      expect(subject.history).to be_an_instance_of(Array)
+    end
+  end
   describe 'balance' do
     it 'returns 0 by default' do
       expect(subject.balance).to eq 0
@@ -42,15 +47,23 @@ end
     end
   end
   describe 'touch_out' do
-    it { is_expected.to respond_to(:touch_out) }
+    it { is_expected.to respond_to(:touch_out).with(1).argument }
     it 'allows you to touch out' do
-      subject.touch_out
+      subject.touch_out(station)
       expect(subject.in_journey?).to eq nil 
     end
     it "deducts the fare from balance" do 
       subject.top_up(1)
       subject.touch_in(station)
-    expect { subject.touch_out }.to change { subject.balance }.by -(Oystercard::MINIMUM_FARE)
+    expect { subject.touch_out(station) }.to change { subject.balance }.by -(Oystercard::MINIMUM_FARE)
   end
+end
+  describe 'history' do
+    it "storing completed journeys" do
+      subject.top_up(1)
+      subject.touch_in(station)
+      subject.touch_out(station)
+      expect(subject.history.length).to eq 1
+    end
 end
 end

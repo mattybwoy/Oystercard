@@ -6,11 +6,16 @@ MINIMUM_FARE = 1
 
   def initialize
     @balance = 0
+    @history = []
   end
 
   def top_up(amount)
     fail "Balance exceeded" if @balance + amount > MAXIMUM_BALANCE
     @balance += amount
+  end
+
+  def history
+    @history
   end
 
   def touch_in(station)
@@ -22,7 +27,7 @@ MINIMUM_FARE = 1
     @entry_station
   end
 
-  def touch_out
+  def touch_out(station)
     deduct(MINIMUM_FARE)
     @entry_station = nil
   end
