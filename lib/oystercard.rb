@@ -20,4 +20,8 @@ MAXIMUM_BALANCE = 90
     true
     end
   end
+
+  def in_journey?
+    true
+  end
 end
