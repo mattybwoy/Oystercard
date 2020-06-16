@@ -37,10 +37,16 @@ describe Oystercard do
   describe 'in-journey?' do
     it { is_expected.to respond_to(:in_journey?) }
     it 'checks whether you are in in journey' do
+      subject.top_up(1)
       subject.touch_in
       expect(subject.touch_in).to eq true
       expect(subject.in_journey?).to eq true
     end
   end
-
+  describe 'touch_out' do
+    it { is_expected.to respond_to(:touch_out) }
+    it 'allows you to touch out' do
+      expect(subject.touch_out).to eq false 
+    end
+  end
 end
