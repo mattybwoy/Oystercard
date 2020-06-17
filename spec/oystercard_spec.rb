@@ -65,5 +65,9 @@ end
       subject.touch_out(station)
       expect(subject.history.length).to eq 1
     end
+    it "creates a card with empty journey history" do
+      oystercard = Oystercard.new
+      expect(subject.journey).to eq({})
+    end
 end
 end
