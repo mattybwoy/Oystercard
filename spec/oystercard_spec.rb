@@ -1,4 +1,5 @@
 require './lib/oystercard'
+#require './lib/station'
 
 describe Oystercard do
   subject(:oystercard) { Oystercard.new }
@@ -28,7 +29,7 @@ describe Oystercard do
     it { is_expected.to respond_to(:touch_in) }
     it 'allows you to touch in' do
       subject.top_up(1)
-      expect(subject.touch_in(station)). to eq station
+      expect(subject.touch_in(station)).to eq station
     end
     it 'raises an error if balance less than £1' do
       expect { subject.touch_in(station) }.to raise_error "Insufficient credit"
