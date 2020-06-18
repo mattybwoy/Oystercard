@@ -9,7 +9,11 @@ describe Oystercard do
     it 'checks journey history is empty' do
       expect(subject.history).to be_an_instance_of(Array)
     end
+      it "creates a card with empty journey history" do
+      oystercard = Oystercard.new
+      expect(subject.history).to eq([])
   end
+end
   describe 'balance' do
     it 'returns 0 by default' do
       expect(subject.balance).to eq 0
@@ -26,17 +30,22 @@ describe Oystercard do
   end
 
   describe 'touch_in' do
-    it { is_expected.to respond_to(:touch_in) }
-    it 'allows you to touch in' do
+  #   it { is_expected.to respond_to(:touch_in) }
+  #   it 'allows you to touch in' do
+  #     subject.top_up(1)
+  #     expect(subject.touch_in(station)).to eq station
+  #   end
+  #   it 'raises an error if balance less than £1' do
+  #     expect { subject.touch_in(station) }.to raise_error "Insufficient credit"
+  # end
+  #   it 'should take station double as an argument' do
+  #     subject.top_up(1)
+  #     expect(subject.touch_in(station)).to eq(station)
+  #   end
+    it "creates a new journey instance" do
       subject.top_up(1)
-      expect(subject.touch_in(station)).to eq station
-    end
-    it 'raises an error if balance less than £1' do
-      expect { subject.touch_in(station) }.to raise_error "Insufficient credit"
-  end
-    it 'should take station double as an argument' do
-      subject.top_up(1)
-      expect(subject.touch_in(station)).to eq(station)
+      subject.touch_in(station)
+      expect(subject.journey).to be_an_instance_of(Journey)
     end
 end
   describe 'in-journey?' do
@@ -44,14 +53,16 @@ end
     it 'checks whether you are in journey' do
       subject.top_up(1)
       subject.touch_in(station)
-      expect(subject.in_journey?).to eq station
+      expect(subject.in_journey?).to eq true
     end
   end
   describe 'touch_out' do
     it { is_expected.to respond_to(:touch_out).with(1).argument }
     it 'allows you to touch out' do
+      subject.top_up(1)
+      subject.touch_in(station)
       subject.touch_out(station)
-      expect(subject.in_journey?).to eq nil 
+      expect(subject.in_journey?).to eq false 
     end
     it "deducts the fare from balance" do 
       subject.top_up(1)
@@ -65,10 +76,6 @@ end
       subject.touch_in(station)
       subject.touch_out(station)
       expect(subject.history.length).to eq 1
-    end
-    it "creates a card with empty journey history" do
-      oystercard = Oystercard.new
-      expect(subject.journey).to eq({})
     end
 end
 end
