@@ -53,6 +53,7 @@ end
     it 'checks whether you are in journey' do
       subject.top_up(1)
       subject.touch_in(station)
+      subject.touch_out(station)
       expect(subject.in_journey?).to eq true
     end
   end
@@ -62,7 +63,7 @@ end
       subject.top_up(1)
       subject.touch_in(station)
       subject.touch_out(station)
-      expect(subject.in_journey?).to eq false 
+      expect(subject.journey.adventure).to eq true
     end
     it "deducts the fare from balance" do 
       subject.top_up(1)

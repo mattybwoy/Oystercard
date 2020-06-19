@@ -29,13 +29,14 @@ MINIMUM_FARE = 1
   end
 
   def in_journey?
-    !@journey.complete?
+    @journey.adventure
   end
 
   def touch_out(station)
     @history << {entry_station: @journey.entry_station, exit_station: station }
     @journey.exit_station = station
     deduct(@journey.fare)
+    @journey.finish
   end
 end
 

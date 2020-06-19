@@ -7,15 +7,6 @@ describe Journey do
       expect(journey).to be_an_instance_of(Journey)
     end
   end
-  describe "complete" do
-    it "returns true if journey is complete" do
-      oystercard = Oystercard.new
-      oystercard.top_up(10)
-      oystercard.touch_in("kings cross")
-      oystercard.touch_out("angel")
-      expect(oystercard.journey.complete?).to eq true
-    end
-  end
     describe "fare" do
     it "minimum fare is charged" do
       oystercard = Oystercard.new
@@ -41,5 +32,14 @@ describe "fare" do
       oystercard.touch_out("kings cross")
       expect(oystercard.journey.fare).to eq Journey::PENALTY_FARE
     end
+end
+describe "finish" do
+  it "checks journey is complete" do
+      oystercard = Oystercard.new
+      oystercard.top_up(10)
+      oystercard.touch_in("kings cross")
+      oystercard.touch_out("angel")
+      expect(oystercard.journey.finish).to eq true
+  end
 end
 end
